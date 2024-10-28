@@ -33,16 +33,15 @@ const textArea = document.getElementById("textArea");
 
 // Play the idle video when the page is loaded
 window.onload = (event) => {
-  agentsAPIworkflow()
-  connect()
+
   playIdleVideo()
 
   if (agentId == "" || agentId == undefined) {
     console.log("Empty 'agentID' and 'chatID' variables\n\n1. Click on the 'Create new Agent with Knowledge' button\n2. Open the Console and wait for the process to complete\n3. Press on the 'Connect' button\n4. Type and send a message to the chat\nNOTE: You can store the created 'agentID' and 'chatId' variables at the bottom of the JS file for future chats")
   } else {
     console.log("You are good to go!\nClick on the 'Connect Button', Then send a new message\nAgent ID: ", agentId, "\nChat ID: ", chatId)
-    /*agentIdLabel.innerHTML = agentId
-    chatIdLabel.innerHTML = chatId*/
+    agentIdLabel.innerHTML = agentId
+    chatIdLabel.innerHTML = chatId
   }
 }
 async function createPeerConnection(offer, iceServers) {
@@ -265,10 +264,8 @@ async function fetchWithRetries(url, options, retries = 1) {
   }
 }
 
-/*const connectButton = document.getElementById('connect-button');
-connectButton.onclick = */async function connect() /*=>*/ {
-  agentId = "agt_3WI5x__k"
-  chatId = "cht_D4oAIeKMtWBcD-sNcCqHb"
+const connectButton = document.getElementById('connect-button');
+connectButton.onclick = async () => {
   if (agentId == "" || agentId === undefined) {
     return alert("1. Click on the 'Create new Agent with Knowledge' button\n2. Open the Console and wait for the process to complete\n3. Press on the 'Connect' button\n4. Type and send a message to the chat\nNOTE: You can store the created 'agentID' and 'chatId' variables at the bottom of the JS file for future chats")
   }
@@ -362,7 +359,7 @@ startButton.onclick = async () => {
   }
 };
 
-/*const destroyButton = document.getElementById('destroy-button');
+const destroyButton = document.getElementById('destroy-button');
 destroyButton.onclick = async () => {
   await fetch(`${DID_API.url}/${DID_API.service}/streams/${streamId}`, {
     method: 'DELETE',
@@ -375,12 +372,12 @@ destroyButton.onclick = async () => {
 
   stopAllStreams();
   closePC();
-};*/
+};
 
 // Agents API Workflow
 async function agentsAPIworkflow() {
-  /*agentIdLabel.innerHTML = `<span style='color:orange'>Processing...<style='color:orange'>`
-  chatIdLabel.innerHTML = `<span style='color:orange'>Processing...<style='color:orange'>`*/
+  agentIdLabel.innerHTML = `<span style='color:orange'>Processing...<style='color:orange'>`
+  chatIdLabel.innerHTML = `<span style='color:orange'>Processing...<style='color:orange'>`
   axios.defaults.baseURL = `${DID_API.url}`;
   axios.defaults.headers.common['Authorization'] = `Basic ${DID_API.key}`
   axios.defaults.headers.common['content-type'] = 'application/json'
@@ -482,14 +479,14 @@ async function agentsAPIworkflow() {
 
   )
   console.log("Create Agent: ", createAgent.data)
-  let agentId = /*createAgent.data.id*/ "agt_3WI5x__k"
+  let agentId = createAgent.data.id
   console.log("Agent ID: " + agentId)
 
   // Agents Overview - Step 2: Create a new Chat session with the Agent
   // https://docs.d-id.com/reference/agents-overview#%EF%B8%8F-step-2-create-a-new-chat-session-with-the-agent
   const createChat = await axios.post(`/agents/${agentId}/chat`)
   console.log("Create Chat: ", createChat.data)
-  let chatId = /*createChat.data.id*/ "cht_D4oAIeKMtWBcD-sNcCqHb"
+  let chatId = createChat.data.id
   console.log("Chat ID: " + chatId)
 
   // Agents Overview - Step 3: Send a Message to a Chat session
@@ -497,13 +494,13 @@ async function agentsAPIworkflow() {
   // The WebRTC steps are called in the functions: 'connectButton.onclick', onIceCandidate(event), 'startButton.onclick'
 
   console.log("Create new Agent with Knowledge - DONE!\n Press on the 'Connect' button to proceed.\n Store the created 'agentID' and 'chatId' variables at the bottom of the JS file for future chats")
-  /*agentIdLabel.innerHTML = agentId
-  chatIdLabel.innerHTML = chatId*/
+  agentIdLabel.innerHTML = agentId
+  chatIdLabel.innerHTML = chatId
   return { agentId: agentId, chatId: chatId }
 
 }
 
-/*const agentsButton = document.getElementById("agents-button")
+const agentsButton = document.getElementById("agents-button")
 agentsButton.onclick = async () => {
   try{
     const agentsIds = {} = await agentsAPIworkflow()
@@ -517,8 +514,8 @@ agentsButton.onclick = async () => {
     chatIdLabel.innerHTML = `<span style='color:red'>Failed</span>`
     throw new Error(err)
   }
-}*/
+}
 
 // Paste Your Created Agent and Chat IDs Here:
-/*agentId = "agt_3WI5x__k"
-chatId = "cht_D4oAIeKMtWBcD-sNcCqHb"*/
+agentId = ""
+chatId = ""
